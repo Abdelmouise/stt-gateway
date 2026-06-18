@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: tts-model-cache
+  labels:
+    app: tts-gateway
+spec:
+  accessModes: [ReadWriteMany]
+  resources:
+    requests:
+      storage: 50Gi
+  # storageClassName: ocs-storagecluster-cephfs   # set per cluster
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: tts-voices
+  labels:
+    app: tts-gateway
+spec:
+  accessModes: [ReadWriteMany]
+  resources:
+    requests:
+      storage: 1Gi
+  # storageClassName: ocs-storagecluster-cephfs

@@ -1,0 +1,6 @@
+# Place your brand voice WAV references here for the bench:
+#
+#   brand_fr.wav      6-10s, 24kHz mono, neutral tone (used for all langs by default)
+#   brand_ar.wav      optional: dedicated AR reference if needed
+#
+# These files are gitignored. Do not commit voice references.

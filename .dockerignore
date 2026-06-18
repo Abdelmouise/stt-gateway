@@ -1,0 +1,16 @@
+.git
+.venv
+venv
+__pycache__
+*.pyc
+.pytest_cache
+.mypy_cache
+.ruff_cache
+bench/audio
+bench/results.csv
+models
+.cache
+.DS_Store
+*.md
+!README.md
+tests

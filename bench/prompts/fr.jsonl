@@ -1,0 +1,10 @@
+{"id": "fr-01", "category": "salutation", "text": "Bonjour, bienvenue chez Attijariwafa bank. Comment puis-je vous accompagner aujourd'hui sur vos services bancaires, comme Carte Wajda ou Pack Amans ?"}
+{"id": "fr-02", "category": "balance", "text": "Le solde de votre compte courant est de mille deux cent trente-quatre dirhams marocains et cinquante-six centimes."}
+{"id": "fr-03", "category": "iban", "text": "Votre IBAN marocain est : M A 6 4, 0 1 1 2, 3 4 5 6, 7 8 9 0, 1 2 3 4 5 6 7 8 9 0."}
+{"id": "fr-04", "category": "otp", "text": "Votre code de validation à usage unique pour confirmer l'opération sur Attijari Mobile est le 4 8 2 0 1 9. Il expire dans cinq minutes."}
+{"id": "fr-05", "category": "name", "text": "Bonjour Monsieur El Amrani, votre rendez-vous avec Madame Benjelloun est confirmé pour mardi prochain à l'agence de Casablanca Maarif."}
+{"id": "fr-06", "category": "error", "text": "Je suis désolé, votre virement n'a pas pu être exécuté car le plafond journalier est dépassé. Veuillez ajuster votre plafond ou réessayer plus tard."}
+{"id": "fr-07", "category": "validation", "text": "Vous confirmez un virement de cinq cents dirhams marocains vers le compte de Madame Meryem El Idrissi ?"}
+{"id": "fr-08", "category": "long", "text": "Pour des raisons de sécurité, votre carte bancaire a été temporairement bloquée après plusieurs tentatives de paiement non reconnues. Vous pouvez la réactiver immédiatement via Attijari Mobile ou en contactant le Centre de Relation Client, avec vérification d'identité et mise à jour du plafond de paiement si nécessaire. Nous pouvons aussi vous renseigner sur les avantages de Carte Wajda et les services du Pack Amans."}
+{"id": "fr-09", "category": "numbers", "text": "Au cours des trente derniers jours, vous avez effectué dix-sept paiements pour un total de deux mille quatre cent cinquante-huit dirhams marocains et quatre-vingt-dix centimes."}
+{"id": "fr-10", "category": "polite-deny", "text": "Je comprends votre demande, mais conformément aux exigences de conformité bancaire, je ne peux pas effectuer cette opération sans authentification forte via Secure Code."}

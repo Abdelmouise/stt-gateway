@@ -1,0 +1,45 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+.python-version
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Tests / tooling
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Models / cache (HF, torch)
+.cache/
+models/
+*.pt
+*.pth
+*.bin
+*.safetensors
+
+# Bench artifacts
+bench/results.csv
+bench/audio/
+bench/voice_refs/*.wav
+!bench/voice_refs/.gitkeep
+
+# Audio outputs
+*.wav
+*.mp3
+*.opus
+!tests/fixtures/**/*.wav
+
+# OS
+.DS_Store

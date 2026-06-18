@@ -1,0 +1,96 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tts-gateway
+  labels:
+    app: tts-gateway
+    component: voice-gateway
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: tts-gateway
+  template:
+    metadata:
+      labels:
+        app: tts-gateway
+        component: voice-gateway
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: /metrics
+        prometheus.io/port: "8000"
+    spec:
+      # GPU node selector — adapt to your cluster taxonomy.
+      nodeSelector:
+        nvidia.com/gpu.product: NVIDIA-A100-SXM4-40GB
+      tolerations:
+        - key: nvidia.com/gpu
+          operator: Exists
+          effect: NoSchedule
+      containers:
+        - name: tts-gateway
+          image: image-registry.openshift-image-registry.svc:5000/voice-gateway/tts-gateway:0.1.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8000
+              protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: tts-gateway-config
+          env:
+            - name: TTS_ADMIN_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: tts-gateway-secrets
+                  key: admin-api-key
+          resources:
+            requests:
+              cpu: "4"
+              memory: 16Gi
+              nvidia.com/gpu: "1"
+            limits:
+              cpu: "8"
+              memory: 32Gi
+              nvidia.com/gpu: "1"
+          startupProbe:
+            httpGet:
+              path: /readyz
+              port: http
+            failureThreshold: 60
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: http
+            periodSeconds: 10
+            timeoutSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            periodSeconds: 30
+            timeoutSeconds: 5
+          volumeMounts:
+            - name: model-cache
+              mountPath: /cache
+            - name: voices
+              mountPath: /app/voices
+              readOnly: false
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsNonRoot: true
+            capabilities:
+              drop: ["ALL"]
+      volumes:
+        - name: model-cache
+          persistentVolumeClaim:
+            claimName: tts-model-cache
+        - name: voices
+          persistentVolumeClaim:
+            claimName: tts-voices

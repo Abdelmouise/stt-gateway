@@ -1,0 +1,10 @@
+{"id": "en-01", "category": "salutation", "text": "Hello, welcome to your bank. How can I help you today?"}
+{"id": "en-02", "category": "balance", "text": "Your current account balance is one thousand two hundred thirty-four euros and fifty-six cents."}
+{"id": "en-03", "category": "iban", "text": "Your IBAN is: F R 7 6, 3 0 0 0 4, 0 0 0 1, 2 3 4 5 6 7 8 9 0 1 2, 7 7."}
+{"id": "en-04", "category": "otp", "text": "Your one-time validation code is 4 8 2 0 1 9. It expires in five minutes."}
+{"id": "en-05", "category": "name", "text": "Good morning Mr El-Amrani, your appointment with Mrs Lefevre is confirmed for next Tuesday."}
+{"id": "en-06", "category": "error", "text": "I'm sorry, I could not complete your transfer. Please try again in a few moments."}
+{"id": "en-07", "category": "validation", "text": "Are you confirming a transfer of five hundred euros to the account of Marie Dubois?"}
+{"id": "en-08", "category": "long", "text": "For security reasons, your debit card has been temporarily blocked following several unrecognised payment attempts. You can unblock it immediately by answering the verification questions, or call customer service at the number on the back of your card."}
+{"id": "en-09", "category": "numbers", "text": "Over the past thirty days, you made 17 payments totalling 2,458.90 euros."}
+{"id": "en-10", "category": "polite-deny", "text": "I understand your request, but for regulatory reasons I cannot perform this operation without strong authentication."}

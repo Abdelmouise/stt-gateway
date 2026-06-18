@@ -1,0 +1,17 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: tts-gateway
+  labels:
+    app: tts-gateway
+  annotations:
+    haproxy.router.openshift.io/timeout: "30s"
+spec:
+  to:
+    kind: Service
+    name: tts-gateway
+  port:
+    targetPort: http
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect

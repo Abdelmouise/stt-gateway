@@ -1,0 +1,285 @@
+---
+# Monitoring & Alerting rules pour TTS Gateway + LiteLLM
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: tts-gateway-alerts
+  namespace: voice-gateway
+  labels:
+    prometheus: kube-prometheus
+spec:
+  groups:
+    - name: tts-gateway-alerts
+      interval: 30s
+      rules:
+        # ============================================
+        # TTS Gateway - Error & Performance
+        # ============================================
+        
+        # ⚠️ High error rate (> 5% in 5 min)
+        - alert: TTSGatewayHighErrorRate
+          expr: |
+            (
+              rate(tts_synthesize_errors_total[5m]) 
+              / 
+              (rate(tts_synthesize_requests_total[5m]) + 1e-4)
+            ) > 0.05
+          for: 5m
+          labels:
+            severity: warning
+            component: tts-gateway
+          annotations:
+            summary: "TTS Gateway error rate > 5%"
+            description: "{{ $value | humanizePercentage }} errors in last 5m"
+            runbook_url: "https://wiki.example.com/tts-errors"
+        
+        # 🔴 Critical error rate (> 20% in 2 min)
+        - alert: TTSGatewayCriticalErrorRate
+          expr: |
+            (
+              rate(tts_synthesize_errors_total[2m]) 
+              / 
+              (rate(tts_synthesize_requests_total[2m]) + 1e-4)
+            ) > 0.2
+          for: 2m
+          labels:
+            severity: critical
+            component: tts-gateway
+          annotations:
+            summary: "🚨 TTS Gateway CRITICAL error rate > 20%"
+            description: "{{ $value | humanizePercentage }} errors"
+        
+        # ⚠️ High latency (p95 > 3 sec)
+        - alert: TTSGatewayHighLatency
+          expr: |
+            histogram_quantile(
+              0.95,
+              rate(tts_request_duration_seconds_bucket[5m])
+            ) > 3
+          for: 5m
+          labels:
+            severity: warning
+            component: tts-gateway
+          annotations:
+            summary: "TTS p95 latency > 3s"
+            description: "p95 latency: {{ $value | humanizeDuration }}"
+        
+        # 🔴 Critical latency (p99 > 5 sec)
+        - alert: TTSGatewayVeryHighLatency
+          expr: |
+            histogram_quantile(
+              0.99,
+              rate(tts_request_duration_seconds_bucket[5m])
+            ) > 5
+          for: 3m
+          labels:
+            severity: critical
+            component: tts-gateway
+          annotations:
+            summary: "🚨 TTS p99 latency > 5s (SLA breach)"
+            description: "p99 latency: {{ $value | humanizeDuration }}"
+        
+        # ⚠️ Pod not ready
+        - alert: TTSGatewayPodNotReady
+          expr: |
+            kube_pod_status_ready{
+              pod=~"tts-gateway-.*",
+              condition="true"
+            } == 0
+          for: 5m
+          labels:
+            severity: warning
+            component: tts-gateway
+          annotations:
+            summary: "TTS Gateway pod not ready"
+            description: "Pod {{ $labels.pod }} not ready for 5m"
+        
+        # ============================================
+        # GPU Health
+        # ============================================
+        
+        # ⚠️ GPU memory leak (increasing > 1GB/hour)
+        - alert: TTSGatewayGPUMemoryLeak
+          expr: |
+            rate(
+              tts_gpu_memory_used_bytes[1h]
+            ) > 
+            (1024 * 1024 * 1024)  # 1GB
+          for: 30m
+          labels:
+            severity: warning
+            component: gpu
+          annotations:
+            summary: "TTS GPU memory leak detected"
+            description: "GPU memory increasing > 1GB/hour"
+        
+        # 🔴 GPU not available
+        - alert: TTSGatewayGPUUnavailable
+          expr: |
+            tts_gpu_available_count == 0
+          for: 2m
+          labels:
+            severity: critical
+            component: gpu
+          annotations:
+            summary: "🚨 TTS Gateway GPU unavailable"
+            description: "No GPU detected"
+        
+        # ⚠️ High GPU memory usage (> 90%)
+        - alert: TTSGatewayHighGPUMemory
+          expr: |
+            (
+              tts_gpu_memory_used_bytes 
+              / 
+              tts_gpu_memory_total_bytes
+            ) > 0.9
+          for: 5m
+          labels:
+            severity: warning
+            component: gpu
+          annotations:
+            summary: "TTS GPU memory > 90%"
+            description: "GPU {{ $labels.device_id }} memory: {{ $value | humanizePercentage }}"
+        
+        # ============================================
+        # LiteLLM Proxy
+        # ============================================
+        
+        # ⚠️ LiteLLM error rate
+        - alert: LiteLLMHighErrorRate
+          expr: |
+            (
+              rate(litellm_router_requests_failed_total[5m])
+              /
+              (rate(litellm_router_requests_total[5m]) + 1e-4)
+            ) > 0.1
+          for: 5m
+          labels:
+            severity: warning
+            component: litellm
+          annotations:
+            summary: "LiteLLM error rate > 10%"
+            description: "{{ $value | humanizePercentage }} requests failed"
+        
+        # ⚠️ LiteLLM queue size growing
+        - alert: LiteLLMQueueBacklog
+          expr: |
+            litellm_router_queue_size > 100
+          for: 5m
+          labels:
+            severity: warning
+            component: litellm
+          annotations:
+            summary: "LiteLLM request queue > 100"
+            description: "Queue size: {{ $value }}"
+        
+        # ============================================
+        # Pod/Node resources
+        # ============================================
+        
+        # ⚠️ High memory usage on pod
+        - alert: TTSGatewayHighMemoryUsage
+          expr: |
+            (
+              container_memory_usage_bytes{pod=~"tts-gateway-.*"}
+              /
+              container_spec_memory_limit_bytes{pod=~"tts-gateway-.*"}
+            ) > 0.85
+          for: 5m
+          labels:
+            severity: warning
+            component: tts-gateway
+          annotations:
+            summary: "TTS Gateway pod memory > 85%"
+            description: "Pod {{ $labels.pod }}: {{ $value | humanizePercentage }}"
+        
+        # ⚠️ High CPU throttling
+        - alert: TTSGatewayCPUThrottling
+          expr: |
+            rate(
+              container_cpu_cfs_throttled_seconds_total{
+                pod=~"tts-gateway-.*"
+              }[5m]
+            ) > 0.1
+          for: 10m
+          labels:
+            severity: warning
+            component: tts-gateway
+          annotations:
+            summary: "TTS Gateway CPU throttled"
+            description: "Pod {{ $labels.pod }} throttled {{ $value | humanizePercentage }}"
+
+---
+# Service Monitor for Prometheus scraping
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: tts-gateway
+  namespace: voice-gateway
+  labels:
+    prometheus: kube-prometheus
+spec:
+  selector:
+    matchLabels:
+      app: tts-gateway
+  endpoints:
+    - port: http
+      path: /metrics
+      interval: 30s
+      scrapeTimeout: 10s
+
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: litellm
+  namespace: voice-gateway
+  labels:
+    prometheus: kube-prometheus
+spec:
+  selector:
+    matchLabels:
+      app: litellm
+  endpoints:
+    - port: metrics
+      path: /metrics
+      interval: 30s
+      scrapeTimeout: 10s
+
+---
+# PrometheusRule for recording rules (useful for dashboards)
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: tts-gateway-recording
+  namespace: voice-gateway
+spec:
+  groups:
+    - name: tts-gateway-recording
+      interval: 15s
+      rules:
+        # Latency percentiles
+        - record: tts:request_duration:p50
+          expr: |
+            histogram_quantile(0.50, rate(tts_request_duration_seconds_bucket[5m]))
+        
+        - record: tts:request_duration:p95
+          expr: |
+            histogram_quantile(0.95, rate(tts_request_duration_seconds_bucket[5m]))
+        
+        - record: tts:request_duration:p99
+          expr: |
+            histogram_quantile(0.99, rate(tts_request_duration_seconds_bucket[5m]))
+        
+        # Request rate
+        - record: tts:requests:rate
+          expr: rate(tts_synthesize_requests_total[5m])
+        
+        # Error rate
+        - record: tts:errors:rate
+          expr: rate(tts_synthesize_errors_total[5m])
+        
+        # GPU utilization
+        - record: tts:gpu_memory:utilization
+          expr: |
+            (tts_gpu_memory_used_bytes / tts_gpu_memory_total_bytes) * 100

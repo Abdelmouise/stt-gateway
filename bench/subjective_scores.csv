@@ -1,0 +1,36 @@
+ts,rater,model,lang,prompt_id,naturalness,intelligibility,accent,similarity,notes
+2026-06-18T13:37:15.618079,anon,xtts,ar_msa,ar-msa-01,3,3,3,3,7/10  carte wajda n'est pas bien prononcé
+2026-06-18T13:37:30.198279,anon,xtts,ar_msa,ar-msa-02,3,3,3,3,10
+2026-06-18T13:37:58.098911,anon,xtts,ar_msa,ar-msa-03,3,3,3,3,7
+2026-06-18T13:38:08.729232,anon,xtts,ar_msa,ar-msa-04,3,3,3,3,
+2026-06-18T13:38:30.286683,anon,xtts,ar_msa,ar-msa-05,3,3,3,3,9
+2026-06-18T13:39:58.071172,anon,xtts,ar_msa,ar-msa-01,5,5,2,5,
+2026-06-18T13:40:19.895458,anon,xtts,ar_msa,ar-msa-02,5,5,2,5,
+2026-06-18T13:40:49.029513,anon,xtts,ar_msa,ar-msa-03,5,4,1,5,
+2026-06-18T13:41:27.478783,anon,xtts,ar_msa,ar-msa-04,5,4,2,5,attijari n'est pas bien prononcé 
+2026-06-18T13:41:51.531785,anon,xtts,ar_msa,ar-msa-05,5,4,3,5,
+2026-06-18T13:42:11.544689,anon,xtts,ar_msa,ar-msa-06,5,5,2,5,
+2026-06-18T13:42:29.835406,anon,xtts,ar_msa,ar-msa-07,5,3,2,5,
+2026-06-18T13:43:08.265929,anon,xtts,ar_msa,ar-msa-08,5,4,3,5,carte wajda et pack aman n'est pasn très bien prononcé 
+2026-06-18T13:43:27.929462,anon,xtts,ar_msa,ar-msa-09,5,4,2,5,
+2026-06-18T13:44:04.312135,anon,xtts,ar_msa,ar-msa-10,5,2,2,5,secure code n'est bien prononcé
+2026-06-18T13:44:14.095991,anon,xtts,en,en-01,5,5,5,5,
+2026-06-18T13:44:22.738675,anon,xtts,en,en-02,5,5,5,5,
+2026-06-18T13:44:32.250986,anon,xtts,en,en-03,5,5,5,5,
+2026-06-18T13:44:39.402233,anon,xtts,en,en-04,5,5,5,5,
+2026-06-18T13:44:53.029298,anon,xtts,en,en-05,5,5,5,5,
+2026-06-18T13:45:01.923015,anon,xtts,en,en-06,5,5,5,5,
+2026-06-18T13:45:08.405142,anon,xtts,en,en-07,5,5,5,5,
+2026-06-18T13:45:17.118839,anon,xtts,en,en-08,5,5,5,5,
+2026-06-18T13:45:23.071707,anon,xtts,en,en-09,5,5,5,5,
+2026-06-18T13:45:31.633212,anon,xtts,en,en-10,5,5,5,5,
+2026-06-18T13:47:51.982105,anon,xtts,fr,fr-01,5,5,5,5,
+2026-06-18T13:48:43.757373,anon,xtts,fr,fr-02,5,5,5,5,
+2026-06-18T13:49:10.917229,anon,xtts,fr,fr-03,5,5,5,5,
+2026-06-18T13:49:20.258088,anon,xtts,fr,fr-04,5,5,5,5,
+2026-06-18T13:49:30.471688,anon,xtts,fr,fr-05,5,5,5,5,
+2026-06-18T13:49:38.616385,anon,xtts,fr,fr-06,5,5,5,5,
+2026-06-18T13:49:50.560974,anon,xtts,fr,fr-07,5,5,5,5,
+2026-06-18T13:51:28.600574,anon,xtts,fr,fr-08,5,5,5,5,
+2026-06-18T13:51:55.624621,anon,xtts,fr,fr-09,5,5,5,5,
+2026-06-18T13:52:10.568517,anon,xtts,fr,fr-10,5,5,5,5,
