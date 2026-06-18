@@ -29,17 +29,7 @@ models/
 *.bin
 *.safetensors
 
-# Bench artifacts
-bench/results.csv
-bench/audio/
-bench/voice_refs/*.wav
-!bench/voice_refs/.gitkeep
 
-# Audio outputs
-*.wav
-*.mp3
-*.opus
-!tests/fixtures/**/*.wav
 
 # OS
 .DS_Store
