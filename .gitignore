@@ -28,6 +28,7 @@ models/
 *.pth
 *.bin
 *.safetensors
+.env
 
 
 

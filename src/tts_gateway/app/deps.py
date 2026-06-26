@@ -6,6 +6,7 @@ from fastapi import Depends, Header, HTTPException, Request, status
 
 from tts_gateway.app.backends import BackendBase
 from tts_gateway.app.config import Settings, get_settings
+from tts_gateway.app.stt import STTBackendBase
 from tts_gateway.app.voices import VoiceRegistry
 
 
@@ -27,6 +28,16 @@ def get_voices_dep(request: Request) -> VoiceRegistry:
             detail="Voice registry not initialized",
         )
     return voices
+
+
+def get_stt_backend_dep(request: Request) -> STTBackendBase:
+    stt_backend = getattr(request.app.state, "stt_backend", None)
+    if stt_backend is None:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="STT backend not initialized",
+        )
+    return stt_backend
 
 
 def require_admin(

@@ -37,7 +37,7 @@ AUDIO_DIR = BENCH_DIR / "audio"
 RESULTS_CSV = BENCH_DIR / "results.csv"
 
 ALL_LANGS = ["fr", "en", "ar_msa", "ar_darija"]
-ALL_MODELS = ["xtts", "chatterbox", "higgs", "fish_speech"]
+ALL_MODELS = ["xtts", "chatterbox", "higgs", "fish_speech", "piper"]
 
 
 def load_prompts(lang: str) -> list[dict]:

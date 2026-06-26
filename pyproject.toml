@@ -52,7 +52,9 @@ xtts       = [
 chatterbox = ["chatterbox-tts; sys_platform != 'darwin'"]
 higgs      = ["transformers>=4.45", "accelerate>=0.34", "torch>=2.2"]
 fish       = ["fish-speech-lib"]
+piper      = ["piper-tts"]
 mms        = ["transformers>=4.45", "torch>=2.2"]
+stt        = ["qwen-asr"]
 
 dev = [
   "pytest>=8.2",

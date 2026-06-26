@@ -33,10 +33,15 @@ class Settings(BaseSettings):
     )
     default_voice_id: str = Field(default="brand_default")
 
+    # --- STT backend selection ---
+    stt_backend: str = Field(default="dummy", description="Active STT backend name.")
+    stt_device: str = Field(default="cpu", description="cpu | cuda | mps (for STT)")
+
     # --- Service limits ---
     max_text_length: int = Field(default=2000, ge=1, le=10000)
     default_sample_rate: int = Field(default=24000)
     request_timeout_s: float = Field(default=30.0)
+    max_audio_upload_bytes: int = Field(default=50 * 1024 * 1024, description="Max upload size for STT (50 MB).")
 
     # --- Auth (admin endpoints) ---
     admin_api_key: str | None = Field(

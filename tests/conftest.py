@@ -15,6 +15,8 @@ def _isolated_settings(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setenv("TTS_VOICES_DIR", str(tmp_path / "voices"))
     monkeypatch.setenv("TTS_MODEL_CACHE_DIR", str(tmp_path / "cache"))
     monkeypatch.setenv("TTS_LOG_LEVEL", "WARNING")
+    monkeypatch.setenv("TTS_STT_BACKEND", "dummy")
+    monkeypatch.setenv("TTS_STT_DEVICE", "cpu")
     monkeypatch.delenv("TTS_ADMIN_API_KEY", raising=False)
     # Force re-evaluation of the cached settings singleton.
     import tts_gateway.app.config as cfg

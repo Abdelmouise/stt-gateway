@@ -19,6 +19,7 @@ _BACKEND_MODULES = [
     "tts_gateway.app.backends.chatterbox",
     "tts_gateway.app.backends.higgs",
     "tts_gateway.app.backends.fish_speech",
+    "tts_gateway.app.backends.piper",
 ]
 
 
